@@ -27,7 +27,7 @@ public class ActorJS extends AbstractActor {
                             int id = message.getTest().getKey();
                             InputJSMessage inputJSMessage = message.getTest().getValue();
 
-                            String res = 
+                            String res = doJSCode()
 
                         }
                 )
