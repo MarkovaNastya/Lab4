@@ -24,13 +24,12 @@ public class Actor extends AbstractActor {
                 .match(
                         InputJSMessage.class, message -> {
                             for (int i=0; i<message.getTests().length; i++){
-
+                                actorJS.tell(new ToDoJSCode(i, message),actorData);
                             }
                         }
                 )
                 .build();
-
-
-
     }
+
+    
 }
