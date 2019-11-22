@@ -16,9 +16,23 @@ public class Test {
 
     @JsonCreator
 
-    public Test(String testName, String expectedResult, Object[] params) {
+    public Test(@JsonProperty(TEST_NAME) String testName,
+                @JsonProperty(EXPECTED_RESULT) String expectedResult,
+                @JsonProperty(PARAMS) Object[] params) {
         this.testName = testName;
         this.expectedResult = expectedResult;
         this.params = params;
+    }
+
+    public String getTestName() {
+        return testName;
+    }
+
+    public String getExpectedResult() {
+        return expectedResult;
+    }
+
+    public Object[] getParams() {
+        return params;
     }
 }

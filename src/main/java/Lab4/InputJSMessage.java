@@ -11,24 +11,20 @@ public class InputJSMessage {
     private final static String FUNCTION_NAME = "functionName";
     private final static String TESTS = "tests";
 
+    private final int packageId;
+    private final String jsScript;
+    private final String functionName;
+    private final Test[] tests;
 
+    @JsonCreator
 
-//    POST
-//    {
-//        "packageId":"11",
-//            "jsScript":"var divideFn = function(a,b) { return a/b} ",
-//            "functionName":"divideFn",
-//            "tests": [
-//        {"testName":"test1",
-//                "expectedResult":"2.0",
-//                "params":[2,1]
-//        },
-//        {"testName":"test2",
-//                "expectedResult":"2.0",
-//                "params":[4,2]
-//        }
-//]
-//    }
-
-
+    public InputJSMessage(@JsonProperty(PACKAGE_ID) String packageId,
+                          @JsonProperty(JS_SCRIPT) String jsScript,
+                          @JsonProperty(FUNCTION_NAME) String functionName,
+                          @JsonProperty(Tests) Test[] tests) {
+        this.packageId = packageId;
+        this.jsScript = jsScript;
+        this.functionName = functionName;
+        this.tests = tests;
+    }
 }
