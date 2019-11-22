@@ -31,5 +31,5 @@ public class Actor extends AbstractActor {
                 .build();
     }
 
-    
+
 }
