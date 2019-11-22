@@ -23,13 +23,15 @@ public class Actor extends AbstractActor {
         return ReceiveBuilder.create()
                 .match(
                         InputJSMessage.class, message -> {
-                            for (int i=0; i<message.getTests().length; i++){
-                                actorJS.tell(new ToDoJSCode(i, message),actorData);
+                            for (int i = 0; i < message.getTests().length; i++) {
+                                actorJS.tell(new ToDoJSCode(i, message), actorData);
                             }
                         }
                 )
                 .match(
-                        
+                        GetMessage.class, message -> {
+                            actorData.tell(message, sender());
+                        }
 
                 )
                 .build();

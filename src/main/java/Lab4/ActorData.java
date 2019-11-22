@@ -1,6 +1,7 @@
 package Lab4;
 
 import akka.actor.AbstractActor;
+import akka.actor.ActorRef;
 import akka.japi.pf.ReceiveBuilder;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.HashMap;
 
 public class ActorData extends AbstractActor {
 
-    HashMap<Integer, ArrayList<PutDataMessage>> data = new HashMap<>();
+    private HashMap<Integer, ArrayList<PutDataMessage>> data = new HashMap<>();
 
     @Override
     public Receive createReceive() {
@@ -19,6 +20,11 @@ public class ActorData extends AbstractActor {
                                     data.get(message.getPackageId()) : new ArrayList<>();
                             testData.add(message);
                             data.put(message.getPackageId(),testData);
+                        }
+                )
+                .match(
+                        GetMessage.class, message -> {
+                            getSender().tell(data.get(message.getPackageId()), ActorRef.noSender());
                         }
                 )
                 .build();
