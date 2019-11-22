@@ -1,4 +1,10 @@
 package Lab4;
 
-public class Actor {
+import akka.actor.AbstractActor;
+
+public class Actor extends AbstractActor {
+    @Override
+    public Receive createReceive() {
+        return null;
+    }
 }
