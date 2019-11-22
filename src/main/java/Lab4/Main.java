@@ -26,8 +26,10 @@ public class Main {
 
         ActorRef actorRef = system.actorOf(Props.create(Actor.class));
 
+        Main main = new Main();
+
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow =
-                instance.createRoute(system).flow(system, materializer);
+                main.listenerRequest(actorRef).flow(system, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
                 ConnectHttp.toHost("localhost", 8080),
@@ -43,7 +45,14 @@ public class Main {
                         thenAccept(unbound -> system.terminate());
     }
 
-    private Route listener
+    private Route listenerRequest (ActorRef actor){
+
+        return null;
+
+
+
+
+    }
 
 
 }
