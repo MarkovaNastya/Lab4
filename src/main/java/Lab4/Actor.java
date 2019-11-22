@@ -9,7 +9,8 @@ public class Actor extends AbstractActor {
     ActorRef actorData;
 
     public Actor() {
-        
+        testPerformerActor = getContext().actorOf(
+                new RoundRobinGroup(routeePaths).props(), "testGroup");
     }
 
 
