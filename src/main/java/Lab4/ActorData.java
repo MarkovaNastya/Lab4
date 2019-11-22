@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class ActorData extends AbstractActor {
 
-    private HashMap<Integer, ArrayList<TestInfo>> storage = new HashMap<>();
+    HashMap<Integer, ArrayList<PutDataMessage>> data = new HashMap<>();
 
     @Override
     public Receive createReceive() {
