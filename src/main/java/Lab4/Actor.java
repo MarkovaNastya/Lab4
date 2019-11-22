@@ -4,6 +4,7 @@ import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.routing.RoundRobinGroup;
+import akka.routing.RoundRobinPool;
 
 public class Actor extends AbstractActor {
 
@@ -11,7 +12,8 @@ public class Actor extends AbstractActor {
     ActorRef actorData;
 
     public Actor() {
-        actorJS = getContext().actorOf(new RoundRobinGroup(3).props(Props.create()), "testGroup");
+        actorJS = getContext().actorOf(new RoundRobinPool(3).props(Props.create(ActorJS.class)), "JSGroup");
+        actorData = getContext().actorOf(Props.create(ActorData.class));
     }
 
 
