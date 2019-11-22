@@ -32,10 +32,7 @@ public class ActorMain extends AbstractActor {
                         GetMessage.class, message -> {
                             actorData.tell(message, sender());
                         }
-
                 )
                 .build();
     }
-
-
 }

@@ -23,8 +23,16 @@ import static akka.http.javadsl.server.Directives.*;
 
 public class App {
 
+    private final static String ROUTES = "routes";
+    private final static String HOST = "localhost";
+    private final static int PORT = 8080;
+    private final static String SERVER_MESSAGE = "Server online at http://localhost:8080/\nPress RETURN to stop...";
+    private final static String POST_MESSAGE = "Message posted";
+    private final static String PACKAGE_ID = "packageId";
+    private final static int TIME_OUT = 5000;
+
     public static void main(String[] args) throws IOException {
-        ActorSystem system = ActorSystem.create("routes");
+        ActorSystem system = ActorSystem.create(ROUTES);
 
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
@@ -37,11 +45,11 @@ public class App {
                 app.listenerRequest(actorRef).flow(system, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
-                ConnectHttp.toHost("localhost", 8080),
+                ConnectHttp.toHost(HOST, PORT),
                 materializer
         );
 
-        System.out.println("Server online at http://localhost:8080/\nPress RETURN to stop...");
+        System.out.println(SERVER_MESSAGE);
         System.in.read();
         binding
                 .thenCompose(ServerBinding::unbind)
@@ -57,31 +65,20 @@ public class App {
                         () -> entity(
                                 Jackson.unmarshaller(InputJSMessage.class), message -> {
                                     actor.tell(message, ActorRef.noSender());
-                                    return complete("Message posted");
+                                    return complete(POST_MESSAGE);
                                 }
                         )
                 ),
                 get(
-                        () -> parameter("packageId", packageId -> {
-                            Future<Object> result = Patterns.ask(
-                                    actor,
-                                    new GetMessage(Integer.parseInt(packageId)),
-                                    5000);
-                            return completeOKWithFuture(result, Jackson.marshaller());
-
-
-
+                        () -> parameter(PACKAGE_ID, packageId -> {
+                                    Future<Object> result = Patterns.ask(
+                                            actor,
+                                            new GetMessage(Integer.parseInt(packageId)),
+                                            TIME_OUT);
+                                    return completeOKWithFuture(result, Jackson.marshaller());
                                 }
-
-
-
                         )
-
                 )
         );
-
-
     }
-
-
 }
