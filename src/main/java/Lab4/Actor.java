@@ -2,6 +2,8 @@ package Lab4;
 
 import akka.actor.AbstractActor;
 import akka.actor.ActorRef;
+import akka.actor.Props;
+import akka.routing.RoundRobinGroup;
 
 public class Actor extends AbstractActor {
 
@@ -9,8 +11,7 @@ public class Actor extends AbstractActor {
     ActorRef actorData;
 
     public Actor() {
-        testPerformerActor = getContext().actorOf(
-                new RoundRobinGroup(routeePaths).props(), "testGroup");
+        actorJS = getContext().actorOf(new RoundRobinGroup(3).props(Props.create()), "testGroup");
     }
 
 
