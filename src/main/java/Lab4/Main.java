@@ -48,26 +48,26 @@ public class Main {
                         thenAccept(unbound -> system.terminate());
     }
 
-    private Route listenerRequest (ActorRef actor){
+    private Route listenerRequest(ActorRef actor) {
 
-        return post(
-                () -> entity(
-                        Jackson.unmarshaller(InputJSMessage.class), message -> {
-                            actor.tell(message,ActorRef.noSender());
-                            return complete("Message posted");
-                        }
+        return concat(
+                post(
+                        () -> entity(
+                                Jackson.unmarshaller(InputJSMessage.class), message -> {
+                                    actor.tell(message, ActorRef.noSender());
+                                    return complete("Message posted");
+                                }
+                        )
+                ),
+                get(
+                        () -> parameter(
+
+
+                                
+                        )
+
                 )
         );
-
-        return get(
-
-
-
-        )
-
-
-
-
 
 
     }
