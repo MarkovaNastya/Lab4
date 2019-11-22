@@ -18,13 +18,29 @@ public class InputJSMessage {
 
     @JsonCreator
 
-    public InputJSMessage(@JsonProperty(PACKAGE_ID) String packageId,
+    public InputJSMessage(@JsonProperty(PACKAGE_ID) int packageId,
                           @JsonProperty(JS_SCRIPT) String jsScript,
                           @JsonProperty(FUNCTION_NAME) String functionName,
-                          @JsonProperty(Tests) Test[] tests) {
+                          @JsonProperty(TESTS) Test[] tests) {
         this.packageId = packageId;
         this.jsScript = jsScript;
         this.functionName = functionName;
         this.tests = tests;
+    }
+
+    public int getPackageId() {
+        return packageId;
+    }
+
+    public String getJsScript() {
+        return jsScript;
+    }
+
+    public String getFunctionName() {
+        return functionName;
+    }
+
+    public Test[] getTests() {
+        return tests;
     }
 }
