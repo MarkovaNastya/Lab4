@@ -63,8 +63,10 @@ public class Main {
                 ),
                 get(
                         () -> parameter("packageId", packageId -> {
-                            Future<Object> result = Patterns.ask(testPackageActor,
-                                    SemaphoreActor.makeRequest(), 5000);
+                            Future<Object> result = Patterns.ask(
+                                    actor,
+                                    new GetMessage(Integer.parseInt(packageId)),
+                                    5000);
                             return completeOKWithFuture(result, Jackson.marshaller());
 
 
