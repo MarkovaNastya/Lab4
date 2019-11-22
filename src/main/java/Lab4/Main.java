@@ -3,11 +3,13 @@ package Lab4;
 import akka.NotUsed;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
+import akka.actor.Props;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
 import akka.http.javadsl.ServerBinding;
 import akka.http.javadsl.model.HttpRequest;
 import akka.http.javadsl.model.HttpResponse;
+import akka.http.javadsl.server.Route;
 import akka.stream.ActorMaterializer;
 import akka.stream.javadsl.Flow;
 
@@ -22,9 +24,8 @@ public class Main {
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
 
-        ActorRef actorRef = 
+        ActorRef actorRef = system.actorOf(Props.create(Actor.class));
 
-        MainHttp instance = new MainHttp(system);
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow =
                 instance.createRoute(system).flow(system, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
@@ -41,6 +42,8 @@ public class Main {
 
                         thenAccept(unbound -> system.terminate());
     }
+
+    private Route listener
 
 
 }
