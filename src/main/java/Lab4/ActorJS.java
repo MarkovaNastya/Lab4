@@ -11,13 +11,11 @@ import javax.script.ScriptException;
 public class ActorJS extends AbstractActor {
 
     private String doJSCode (String jscript, String functionName, Object[] params) throws ScriptException, NoSuchMethodException {
-        ScriptEngine engine = new
-                ScriptEngineManager().getEngineByName("nashorn");
+        ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
         engine.eval(jscript);
         Invocable invocable = (Invocable) engine;
         return invocable.invokeFunction(functionName, params).toString();
     }
-
 
     @Override
     public Receive createReceive() {
@@ -27,7 +25,10 @@ public class ActorJS extends AbstractActor {
                             int id = message.getTest().getKey();
                             InputJSMessage inputJSMessage = message.getTest().getValue();
 
-                            String res = doJSCode()
+                            String res = doJSCode(inputJSMessage.getJsScript(),
+                                    inputJSMessage.getFunctionName(),
+                                    inputJSMessage.getTests()[id].getParams());
+
 
                         }
                 )
