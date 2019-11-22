@@ -1,6 +1,7 @@
 package Lab4;
 
 import akka.NotUsed;
+import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.http.javadsl.ConnectHttp;
 import akka.http.javadsl.Http;
@@ -20,6 +21,8 @@ public class Main {
 
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
+
+        ActorRef actorRef = 
 
         MainHttp instance = new MainHttp(system);
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow =
