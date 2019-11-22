@@ -21,7 +21,7 @@ import java.util.concurrent.CompletionStage;
 
 import static akka.http.javadsl.server.Directives.*;
 
-public class Main {
+public class App {
 
     public static void main(String[] args) throws IOException {
         ActorSystem system = ActorSystem.create("routes");
@@ -29,12 +29,12 @@ public class Main {
         final Http http = Http.get(system);
         final ActorMaterializer materializer = ActorMaterializer.create(system);
 
-        ActorRef actorRef = system.actorOf(Props.create(Actor.class));
+        ActorRef actorRef = system.actorOf(Props.create(ActorMain.class));
 
-        Main main = new Main();
+        App app = new App();
 
         final Flow<HttpRequest, HttpResponse, NotUsed> routeFlow =
-                main.listenerRequest(actorRef).flow(system, materializer);
+                app.listenerRequest(actorRef).flow(system, materializer);
         final CompletionStage<ServerBinding> binding = http.bindAndHandle(
                 routeFlow,
                 ConnectHttp.toHost("localhost", 8080),

@@ -7,12 +7,12 @@ import akka.japi.pf.ReceiveBuilder;
 import akka.routing.RoundRobinGroup;
 import akka.routing.RoundRobinPool;
 
-public class Actor extends AbstractActor {
+public class ActorMain extends AbstractActor {
 
     ActorRef actorJS;
     ActorRef actorData;
 
-    public Actor() {
+    public ActorMain() {
         actorJS = getContext().actorOf(new RoundRobinPool(3).props(Props.create(ActorJS.class)), "JSGroup");
         actorData = getContext().actorOf(Props.create(ActorData.class));
     }
