@@ -17,8 +17,7 @@ import akka.stream.javadsl.Flow;
 import java.io.IOException;
 import java.util.concurrent.CompletionStage;
 
-import static akka.http.javadsl.server.Directives.entity;
-import static akka.http.javadsl.server.Directives.post;
+import static akka.http.javadsl.server.Directives.*;
 
 public class Main {
 
@@ -53,12 +52,11 @@ public class Main {
 
         return post(
                 () -> entity(
-                        Jackson.unmarshaller(InputJSMessage.class), message
-
-
+                        Jackson.unmarshaller(InputJSMessage.class), message -> {
+                            actor.tell(message,ActorRef.noSender());
+                            return complete("Message posted");
+                        }
                 )
-
-
         );
 
 
