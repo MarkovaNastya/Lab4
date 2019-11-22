@@ -24,7 +24,10 @@ public class ActorJS extends AbstractActor {
         return ReceiveBuilder.create()
                 .match(
                         ToDoJSCode.class, message -> {
-                            
+                            int id = message.getTest().getKey();
+                            InputJSMessage inputJSMessage = message.getTest().getValue();
+
+                            String res = 
 
                         }
                 )
